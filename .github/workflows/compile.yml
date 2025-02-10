@@ -8,8 +8,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -19,11 +17,3 @@ jobs:
           yarn install --frozen-lockfile
           yarn compile
 
-      - name: Push compiled action
-        env:
-          GITHUB_TOKEN: ${{ env.ADMIN_GITHUB_TOKEN }}
-        run: |
-          git config --global user.name 'CI'
-          git config --global user.email 'eli.segal@gmail.com'
-          git diff --quiet HEAD || git commit -am "ci:Action compiled by ncc [skip ci]"
-          git push
